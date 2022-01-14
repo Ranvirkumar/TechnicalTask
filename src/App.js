@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { useState, useEffect } from 'react'
+import Login from './Screen/Login';
+import Signup from "./Screen/SignUp"
+import ForgetPassword from "./Screen/ForgetPassword"
+import Dashboard from "./Screen/Dashboard"
+import {
+  Switch,
+  Route,
+  useLocation,
+  useHistory
+} from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { StyledEngineProvider } from "@mui/material";
+const App = () => {
+  const history=useHistory()
+  const location=useLocation()
+  const data=window.localStorage.getItem("sessionToken")
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledEngineProvider injectFirst>
+        <Switch location={location} key={location.pathname} >
+          <Route exact path="/">
+            <Login />
+          </Route>
+          <Route path="/Signup">
+            <Signup />
+          </Route>
+          <Route path="/ForgetPassword">
+            <ForgetPassword />
+          </Route>
+          <Route path="/Dashboard">
+            <Dashboard />
+          </Route>
+        </Switch>
+      <ToastContainer />
+    </StyledEngineProvider>
   );
 }
 
