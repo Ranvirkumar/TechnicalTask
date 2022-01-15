@@ -31,9 +31,6 @@ const Signup = () => {
         email: '',
         gender: '',
         phoneNumber: '',
-        password: '',
-        confirmPassword: '',
-        termsAndConditions: false
     }
     const validationSchema = Yup.object().shape({
         name: Yup.string().min(3, "It's too short").required("Required"),
@@ -45,13 +42,12 @@ const Signup = () => {
                 /^[6-9][0-9]{9}$/,
                 "Phone number is not valid"
             ),
-        password: Yup.string().min(6, "Password minimum length should be 6").required("Required"),
+        password: Yup.string().min(4, "Password minimum length should be 4").required("Required"),
         confirmPassword: Yup.string().oneOf([Yup.ref('password')], "Password not matched").required("Required"),
         termsAndConditions: Yup.string().oneOf(["true"], "Accept terms & conditions")
     })
     const onSubmit = (values, props) => {
         const { name, email, gender, phoneNumber, password } = values
-        console.log("data=========>",values)
         firebase
             .auth()
             .createUserWithEmailAndPassword(email, password)
@@ -67,14 +63,12 @@ const Signup = () => {
                         props.setSubmitting(false)
                     })
                     .catch((error) => {
-                        console.log("error========>",error)
                         toast.error(error.message)
                         props.setSubmitting(false)
 
                     });
             })
             .catch((error) => {
-                console.log("error========>",error)
                 toast.error(error.message)
                 props.setSubmitting(false)
             });
@@ -124,7 +118,6 @@ const Signup = () => {
                                     < Field
                                         as={RadioGroup}
                                         aria-label="gender"
-                                        name="gender"
                                         name="gender"
                                         style={{ display: 'initial' }}>
                                         <FormControlLabel

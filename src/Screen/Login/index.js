@@ -9,7 +9,7 @@ import toast from '../../Component/toast'
 
 const Login = () => {
     const history = useHistory()
-    const paperStyle = { padding: 20, height: '73vh', width: 300, margin: "0 auto" }
+    const paperStyle = { padding: 20, height: "auto", width: 300, margin: "0 auto" }
     const btnstyle = { margin: '8px 0' }
     const initialValues = {
         username: '',
@@ -17,7 +17,7 @@ const Login = () => {
     }
     const validationSchema = Yup.object().shape({
         username: Yup.string().email('please enter valid email').required("Required"),
-        password: Yup.string().required("Required")
+        password: Yup.string().min(4, "Password minimum length should be 4").required("Required"),
     })
     const onSubmit = (values, props) => {
         const { username, password } = values
@@ -25,7 +25,6 @@ const Login = () => {
             .then((res) => {
                 toast.success("Successfully login")
                 props.setSubmitting(false)
-                window.localStorage.setItem("sessionToken",res.user.uid)
                 props.resetForm()
                 history.push("Dashboard")
             })
@@ -47,27 +46,27 @@ const Login = () => {
                     {(props) => (
                         <Form>
                             <Grid mb={2}>
-                            <Field
-                                as={TextField}
-                                label='Username'
-                                name="username"
-                                placeholder='Enter username'
-                                fullWidth
-                                required
-                                helperText={<ErrorMessage name="username" />}
-                            />
+                                <Field
+                                    as={TextField}
+                                    label='Username'
+                                    name="username"
+                                    placeholder='Enter username'
+                                    fullWidth
+                                    required
+                                    helperText={<ErrorMessage name="username" />}
+                                />
                             </Grid>
-                             <Grid mb={2}>
-                            <Field
-                                as={TextField}
-                                label='Password'
-                                name="password"
-                                placeholder='Enter password'
-                                type='password'
-                                fullWidth
-                                required
-                                helperText={<ErrorMessage name="password" />} />
-                                </Grid>
+                            <Grid mb={2}>
+                                <Field
+                                    as={TextField}
+                                    label='Password'
+                                    name="password"
+                                    placeholder='Enter password'
+                                    type='password'
+                                    fullWidth
+                                    required
+                                    helperText={<ErrorMessage name="password" />} />
+                            </Grid>
                             <Button
                                 type='submit'
                                 color='primary'
