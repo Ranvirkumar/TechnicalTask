@@ -1,31 +1,18 @@
-import React from 'react';
-
-// material-ui
-import LinearProgress from '@mui/material/LinearProgress';
-import { makeStyles } from '@mui/styles';
-// style constant
-const useStyles = makeStyles((theme) => ({
-    root: {
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 1301,
-        width: '100%',
-        '& > * + *': {
-            marginTop: 10
-        }
-    }
-}));
+import * as React from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
 
 //-----------------------|| Loader ||-----------------------//
 
 const Loader = () => {
-    const classes = useStyles();
 
     return (
-        <div className={classes.root}>
-            <LinearProgress color="primary" />
-        </div>
+        <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open
+        >
+            <CircularProgress color="inherit" />
+        </Backdrop>
     );
 };
 

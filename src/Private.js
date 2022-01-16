@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Dashboard from "./Screen/Dashboard"
 import {
     Switch,
@@ -18,8 +18,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import firebase from './firebase';
 const theme = createTheme();
 const Private = () => {
-    const [open, setOpen] = React.useState(true);
-    const [title, setTitle] = React.useState("Dashboard");
+    const [open, setOpen] = useState(true);
+    const [toggleOpen, settoggleOpen] = useState(true);
+    const [title, setTitle] = useState("Dashboard");
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -38,14 +39,23 @@ const Private = () => {
         setTitle(item.title)
         history.push(item.url)
     }
+    const isMobileDevice = window.navigator.userAgent.toLowerCase().includes("mobi");
+
+    useEffect(() => {
+        if (isMobileDevice) {
+            settoggleOpen(false)
+        } else {
+            settoggleOpen(open)
+        }
+    }, [isMobileDevice, open])
     return (
         <StyledEngineProvider injectFirst>
             <ThemeProvider theme={theme}>
                 <Box sx={{ display: 'flex' }}>
                     <CssBaseline />
                     <NavigationScroll>
-                        {isAuthenticated && <Header open={open} toggleDrawer={toggleDrawer} handleLogout={handleLogout} title={title} />}
-                        {isAuthenticated && <Sidebar open={open} toggleDrawer={toggleDrawer} handleUrl={handleUrl} title={title} />}
+                        {isAuthenticated && <Header open={toggleOpen} toggleDrawer={toggleDrawer} handleLogout={handleLogout} title={title} />}
+                        {isAuthenticated && <Sidebar open={toggleOpen} toggleDrawer={toggleDrawer} handleUrl={handleUrl} title={title} />}
                         <Switch location={location} key={location.pathname} >
                             {isAuthenticated && <ProtectedRoute exact path="/" component={Dashboard} />}
                             <ProtectedRoute path="/Dashboard" component={Dashboard} />

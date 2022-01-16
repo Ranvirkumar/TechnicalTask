@@ -9,7 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import MenuIcon from '@mui/icons-material/Menu';
 import { awards } from './List';
 const drawerWidth = 240;
 
@@ -66,7 +66,7 @@ function Sidebar({ open, toggleDrawer, handleUrl, title }) {
                 }}
             >
                 <IconButton onClick={toggleDrawer}>
-                    <ChevronLeftIcon />
+                    <MenuIcon />
                 </IconButton>
             </Toolbar>
             <Divider />
